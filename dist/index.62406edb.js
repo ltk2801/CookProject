@@ -1,43 +1,34 @@
-const recipeContainer = document.querySelector('.recipe');
-
-const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
-  });
+const recipeContainer = document.querySelector(".recipe");
+const timeout = function(s) {
+    return new Promise(function(_, reject) {
+        setTimeout(function() {
+            reject(new Error(`Request took too long! Timeout after ${s} second`));
+        }, s * 1000);
+    });
 };
-
 // https://forkify-api.herokuapp.com/v2
-
 ///////////////////////////////////////
-
-const showRecipe = async function () {
-  try {
-    // 1. Tải công thức - loading recipe
-    const res = await fetch(
-      `https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bcc40`
-    );
-    const data = await res.json();
-    // Bắt lỗi ID sai
-    if (!res.ok) throw new Error(`${data.message} (${res.status} error 💥💥)`);
-
-    let { recipe } = data.data;
-    recipe = {
-      id: recipe.id,
-      title: recipe.title,
-      publisher: recipe.publisher,
-      sourceUrl: recipe.source_url,
-      image: recipe.image_url,
-      ingredients: recipe.ingredients,
-      servings: recipe.servings,
-      cookingTime: recipe.cooking_time,
-    };
-
-    console.log(recipe);
-
-    // 2. Xuất công thức - Rending recipe
-    const markup = ` <figure class="recipe__fig">
+const showRecipe = async function() {
+    try {
+        // 1. Tải công thức - loading recipe
+        const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bcc40`);
+        const data = await res.json();
+        // Bắt lỗi ID sai
+        if (!res.ok) throw new Error(`${data.message} (${res.status} error 💥💥)`);
+        let { recipe  } = data.data;
+        recipe = {
+            id: recipe.id,
+            title: recipe.title,
+            publisher: recipe.publisher,
+            sourceUrl: recipe.source_url,
+            image: recipe.image_url,
+            ingredients: recipe.ingredients,
+            servings: recipe.servings,
+            cookingTime: recipe.cooking_time
+        };
+        console.log(recipe);
+        // 2. Xuất công thức - Rending recipe
+        const markup = ` <figure class="recipe__fig">
           <img src="${recipe.image}" alt="${recipe.title}" class="recipe__img" />
           <h1 class="recipe__title">
             <span>${recipe.title}</span>
@@ -130,11 +121,12 @@ const showRecipe = async function () {
             </svg>
           </a>
         </div>`;
-    recipeContainer.innerHTML = ``;
-    recipeContainer.insertAdjacentHTML('afterbegin', markup);
-  } catch (error) {
-    alert(error);
-  }
+        recipeContainer.innerHTML = ``;
+        recipeContainer.insertAdjacentHTML("afterbegin", markup);
+    } catch (error) {
+        alert(error);
+    }
 };
-
 showRecipe();
+
+//# sourceMappingURL=index.62406edb.js.map
